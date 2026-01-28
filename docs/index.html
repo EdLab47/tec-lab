@@ -32,6 +32,7 @@
 
         .level-card[data-type="orange"] { border-left-color: #F97316; }
         .level-card[data-type="green"] { border-left-color: #10B981; }
+        .level-card[data-type="purple"] { border-left-color: #7C3AED; }
 
         details summary {
             list-style: none;
@@ -45,10 +46,6 @@
             transform: rotate(180deg);
         }
 
-        .tab-btn {
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-        }
-
         .badge {
             display: inline-flex;
             align-items: center;
@@ -60,22 +57,15 @@
             border: 1px solid #E2E8F0;
         }
 
-        .step-marker {
-            background: #2563EB;
-            color: white;
-            width: 24px;
-            height: 24px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            border-radius: 6px;
-            font-size: 0.75rem;
-            font-weight: 800;
+        .checklist-item input:checked + span {
+            text-decoration: line-through;
+            color: #94A3B8;
         }
-
+        
         table {
             width: 100%;
             border-collapse: collapse;
+            font-size: 0.9rem;
         }
         th {
             background: #F1F5F9;
@@ -88,14 +78,16 @@
         td {
             padding: 12px;
             border-bottom: 1px solid #F1F5F9;
+            vertical-align: top;
         }
-
-        .checklist-item input:checked + span {
-            text-decoration: line-through;
-            color: #94A3B8;
-        }
+        
+        /* Ajustes de color específicos del manual */
+        .text-accent-blue { color: #2563EB; }
+        .text-accent-orange { color: #F97316; }
+        .text-accent-green { color: #10B981; }
+        .border-accent-blue { border-color: #2563EB; }
     </style>
-<link rel="stylesheet" href="./index.css">
+<link rel="stylesheet" href="/index.css">
     <script type="importmap">
     {
       "imports": {
@@ -124,7 +116,7 @@
                     {/* Encabezado */}
                     <header className="text-center mb-16">
                         <h1 className="text-4xl md:text-5xl font-extrabold text-slate-900 mb-8 tracking-tight">
-                            TALLER DE INNOVACIÓN <span className="text-blue-600">TECNOLÓGICA</span>
+                            TALLER DE INNOVACIÓN <span className="text-accent-blue">TECNOLÓGICA</span>
                         </h1>
                         
                         {/* Pestañas Cápsula */}
@@ -159,12 +151,12 @@
             );
         };
 
-        const LevelAccordion = ({ title, mission, children, type = "blue" }) => (
-            <details className={`glass-card level-card mb-6 group`} data-type={type}>
+        const LevelAccordion = ({ title, mission, children, type = "blue", isOpen = false }) => (
+            <details className={`glass-card level-card mb-6 group`} data-type={type} open={isOpen}>
                 <summary className="p-6 flex items-center justify-between">
                     <div className="flex flex-col">
                         <h3 className="text-lg font-bold text-slate-800">{title}</h3>
-                        {mission && <p className="text-sm text-blue-600 font-semibold mt-1 uppercase tracking-wider">Misión: {mission}</p>}
+                        {mission && <p className="text-sm text-accent-blue font-semibold mt-1 uppercase tracking-wider">Misión: {mission}</p>}
                     </div>
                     <svg className="w-6 h-6 text-slate-400 transition-transform icon-chevron" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 9l-7 7-7-7" />
@@ -179,21 +171,20 @@
         const Grade2Content = () => (
             <div className="animate-in fade-in duration-500">
                 <div className="flex flex-wrap gap-3 mb-8 justify-center md:justify-start">
-                    <span className="badge">⏱️ Tiempo: 5 Horas</span>
-                    <span className="badge">🚀 Modalidad: Autónoma</span>
+                    <span className="badge">🚀 Modalidad: Trabajo Autónomo</span>
                 </div>
 
-                <div className="glass-card p-8 mb-10 border-t-4 border-blue-600">
+                <div className="glass-card p-8 mb-10 border-t-4 border-accent-blue">
                     <h2 className="text-3xl font-black text-slate-900 mb-4">📘 MANUAL DE INGENIERÍA: Diseño CAD y Simbología</h2>
-                    <p className="text-orange-600 font-bold flex items-center gap-2">
-                        <span className="text-xl">⚠️</span> Regla de Oro: Sigue los pasos en orden. No te saltes nada.
+                    <p className="text-accent-orange font-bold flex items-center gap-2">
+                        <span className="text-xl">Regla de Oro:</span> Sigue los pasos en orden. No te saltes nada.
                     </p>
                 </div>
 
-                <LevelAccordion title="🧠 DICCIONARIO VISUAL">
+                <LevelAccordion title="🧠 DICCIONARIO VISUAL" type="purple">
                     <p className="italic text-slate-500 text-sm mb-4">*Si las instrucciones dicen una palabra rara, revisa aquí.*</p>
-                    <div className="overflow-x-auto rounded-lg border border-slate-100">
-                        <table>
+                    <div className="overflow-x-auto rounded-lg border border-slate-200">
+                        <table className="w-full">
                             <thead>
                                 <tr>
                                     <th>TÉRMINO</th>
@@ -201,19 +192,19 @@
                                     <th>¿DÓNDE ESTÁ?</th>
                                 </tr>
                             </thead>
-                            <tbody>
+                            <tbody className="bg-white">
                                 <tr>
-                                    <td className="font-bold">PESTAÑA</td>
+                                    <td className="font-bold text-slate-800">PESTAÑA</td>
                                     <td>El menú de arriba (Inicio, Insertar).</td>
                                     <td>Barra superior de colores.</td>
                                 </tr>
                                 <tr>
-                                    <td className="font-bold">AGRUPAR</td>
+                                    <td className="font-bold text-slate-800">AGRUPAR</td>
                                     <td>Soldar piezas para que no se muevan.</td>
                                     <td>Clic Derecho > Agrupar.</td>
                                 </tr>
                                 <tr>
-                                    <td className="font-bold">SHIFT ⇧</td>
+                                    <td className="font-bold text-slate-800">SHIFT ⇧</td>
                                     <td>La tecla "Mayús" (Flecha hacia arriba).</td>
                                     <td>A la izquierda, arriba de Control.</td>
                                 </tr>
@@ -236,7 +227,7 @@
                         <ol className="list-decimal list-inside space-y-3 ml-4 text-slate-600">
                             <li>Ve a la pestaña <strong>INSERTAR</strong> > <strong>FORMAS</strong> > <strong>Elipse</strong> (Círculo).</li>
                             <li className="p-4 bg-orange-50 border border-orange-200 rounded-lg">
-                                <strong className="text-orange-700">🛑 ¡TRUCO PRO! Antes de dibujar:</strong>
+                                <strong className="text-accent-orange">🛑 ¡TRUCO PRO! Antes de dibujar:</strong>
                                 <ul className="list-disc list-inside mt-2 space-y-1 text-orange-800">
                                     <li>Mantén presionada la tecla <code>SHIFT</code> ⇧ con tu mano izquierda y <strong>NO la sueltes</strong>.</li>
                                     <li>Con tu mano derecha, dibuja el círculo con el mouse.</li>
@@ -263,7 +254,7 @@
                             <li><strong>Selección Difícil:</strong> Tienes que seleccionar AMBAS figuras a la vez. Haz un clic afuera del dibujo y, sin soltar, <strong>arrastra el mouse</strong> para crear un recuadro que encierre al Círculo Y a la Línea.</li>
                             <li>Busca arriba: Pestaña <strong>FORMATO DE FORMA</strong>.</li>
                             <li>Busca el grupo <strong>Organizar</strong> (a la derecha) y da clic en el botón <strong>ALINEAR</strong>.</li>
-                            <li>Selecciona: <strong>ALINEAR VERTICALMENTE</strong>. <span className="text-blue-600 italic">*Observa cómo la línea salta sola al centro exacto.*</span></li>
+                            <li>Selecciona: <strong>ALINEAR VERTICALMENTE</strong>. <span className="text-accent-blue italic">*Observa cómo la línea salta sola al centro exacto.*</span></li>
                         </ol>
                     </div>
                     <div>
@@ -272,7 +263,7 @@
                             <li>Asegúrate de que las dos figuras sigan seleccionadas.</li>
                             <li>Pon el mouse justo <strong>sobre una línea negra</strong> del dibujo.</li>
                             <li>Da <strong>Clic Derecho</strong> > Busca <strong>Agrupar</strong> > Clic en <strong>Agrupar</strong>.</li>
-                            <li><em className="text-green-600 font-bold">Prueba de Calidad:</em> Intenta mover el dibujo. Si se mueve todo junto, ¡listo!</li>
+                            <li><em className="text-accent-green font-bold">Prueba de Calidad:</em> Intenta mover el dibujo. Si se mueve todo junto, ¡listo!</li>
                         </ol>
                     </div>
                 </LevelAccordion>
@@ -300,7 +291,7 @@
                             <li>Selecciona los 3 círculos al mismo tiempo (haz un cuadro con el mouse).</li>
                             <li>Ve a <strong>Formato</strong> > <strong>Alinear</strong> > <strong>Alinear Verticalmente</strong>. (Ahora están derechos).</li>
                             <li className="p-4 bg-blue-50 border border-blue-200 rounded-lg">
-                                <strong className="text-blue-700">🛑 HERRAMIENTA NUEVA:</strong> Regresa al botón <strong>Alinear</strong> y da clic en: <strong>DISTRIBUIR VERTICALMENTE</strong>. <span className="italic">*¡Magia! Los espacios entre los círculos se arreglan solos.*</span>
+                                <strong className="text-accent-blue">🛑 HERRAMIENTA NUEVA:</strong> Regresa al botón <strong>Alinear</strong> y da clic en: <strong>DISTRIBUIR VERTICALMENTE</strong>. <span className="italic">*¡Magia! Los espacios entre los círculos se arreglan solos.*</span>
                             </li>
                         </ol>
                     </div>
@@ -323,21 +314,21 @@
                         </div>
                         <div className="grid md:grid-cols-3 gap-4">
                             <div className="p-4 bg-slate-50 rounded-lg border border-slate-200">
-                                <h5 className="font-bold text-blue-600 mb-2 underline">1. Resistencia (Zigzag)</h5>
+                                <h5 className="font-bold text-accent-blue mb-2 underline">1. Resistencia (Zigzag)</h5>
                                 <ul className="text-sm space-y-2 text-slate-600">
                                     <li><span className="italic">Búsqueda sugerida: "Símbolo eléctrico resistencia IEEE"</span></li>
                                     <li>Ve a <strong>Insertar</strong> > <strong>Formas</strong>.</li>
-                                    <li>Elige <strong>Forma Libre</strong> (el icono parece una cuerda enredada).</li>
-                                    <li>Haz clic en la hoja para empezar a dibujar picos.</li>
-                                    <li>Presiona <code>Esc</code> al terminar.</li>
+                                    <li>En la sección "Líneas", elige <strong>Forma Libre</strong> (el icono parece una cuerda enredada).</li>
+                                    <li>Haz clic en la hoja para empezar a dibujar picos (clic arriba, clic abajo, clic arriba...).</li>
+                                    <li>Al terminar, presiona la tecla <code>Esc</code> o haz doble clic rápido.</li>
                                 </ul>
                             </div>
                             <div className="p-4 bg-slate-50 rounded-lg border border-slate-200">
-                                <h5 className="font-bold text-blue-600 mb-2 underline">2. Fuente de Poder</h5>
+                                <h5 className="font-bold text-accent-blue mb-2 underline">2. Fuente de Poder</h5>
                                 <p className="text-sm text-slate-600">Dibuja dos líneas paralelas: una larga (+) y una corta (-) al lado.</p>
                             </div>
                             <div className="p-4 bg-slate-50 rounded-lg border border-slate-200">
-                                <h5 className="font-bold text-blue-600 mb-2 underline">3. Tierra (GND)</h5>
+                                <h5 className="font-bold text-accent-blue mb-2 underline">3. Tierra (GND)</h5>
                                 <p className="text-sm text-slate-600">Dibuja tres líneas horizontales una debajo de otra (Grande, Mediana, Pequeña). <strong>¡OJO!</strong> Selecciona las 3 líneas y usa <strong>Alinear Verticalmente</strong> para que queden centradas.</p>
                             </div>
                         </div>
@@ -361,7 +352,7 @@
                     <div className="space-y-4">
                         {["Botón Power (Alineado y Agrupado).", "Semáforo (Distribuido y Agrupado).", "Catálogo (Nivel 3).", "Bitácora contestada."].map(item => (
                             <label key={item} className="flex items-center gap-3 checklist-item cursor-pointer">
-                                <input type="checkbox" className="w-5 h-5 rounded text-green-600 border-green-300 focus:ring-green-500" />
+                                <input type="checkbox" className="w-5 h-5 rounded text-accent-green border-green-300 focus:ring-green-500" />
                                 <span className="text-slate-700 font-medium">{item}</span>
                             </label>
                         ))}
@@ -373,21 +364,20 @@
         const Grade3Content = () => (
             <div className="animate-in fade-in duration-500">
                 <div className="flex flex-wrap gap-3 mb-8 justify-center md:justify-start">
-                    <span className="badge">⏱️ Tiempo: 9 Horas</span>
                     <span className="badge">🚀 Modalidad: Desarrollo de Software</span>
                 </div>
 
-                <div className="glass-card p-8 mb-10 border-t-4 border-blue-600">
+                <div className="glass-card p-8 mb-10 border-t-4 border-accent-blue">
                     <h2 className="text-3xl font-black text-slate-900 mb-4">📘 MANUAL DE INGENIERÍA: Simulador HMI</h2>
-                    <p className="text-orange-600 font-bold flex items-center gap-2">
-                        <span className="text-xl">⚠️</span> Regla de Oro: La lógica requiere paciencia. Lee dos veces antes de dar clic.
+                    <p className="text-accent-orange font-bold flex items-center gap-2">
+                        <span className="text-xl">Regla de Oro:</span> La lógica requiere paciencia. Lee dos veces antes de dar clic.
                     </p>
                 </div>
 
-                <LevelAccordion title="🧠 DICCIONARIO TÉCNICO COMPLETO">
+                <LevelAccordion title="🧠 DICCIONARIO TÉCNICO COMPLETO" type="purple">
                     <p className="italic text-slate-500 text-sm mb-4">*Domina este vocabulario para hablar como ingeniero.*</p>
-                    <div className="overflow-x-auto rounded-lg border border-slate-100">
-                        <table>
+                    <div className="overflow-x-auto rounded-lg border border-slate-200">
+                        <table className="w-full">
                             <thead>
                                 <tr>
                                     <th>TÉRMINO</th>
@@ -395,90 +385,132 @@
                                     <th>APLICACIÓN EN TU PROYECTO</th>
                                 </tr>
                             </thead>
-                            <tbody className="text-sm">
-                                <tr><td className="font-bold">HMI</td><td className="italic">Human-Machine Interface</td><td>Es el panel de control (Pantalla) que diseñas.</td></tr>
-                                <tr><td className="font-bold">GUI</td><td className="italic">Graphical User Interface</td><td>Es la parte estética: colores, iconos y botones modernos.</td></tr>
-                                <tr><td className="font-bold">INPUT</td><td className="italic">Señal de Entrada</td><td>Es la orden que tú das (Ejemplo: Tu Clic).</td></tr>
-                                <tr><td className="font-bold">OUTPUT</td><td className="italic">Señal de Salida</td><td>Es la respuesta de la máquina (Ejemplo: Cambiar de página).</td></tr>
-                                <tr><td className="font-bold">VÍNCULO</td><td className="italic">Cableado Lógico</td><td>La conexión invisible entre un botón y una acción.</td></tr>
-                                <tr><td className="font-bold">LOGIN</td><td className="italic">Autenticación</td><td>Sistema de seguridad (Contraseña) para filtrar usuarios.</td></tr>
-                                <tr><td className="font-bold">KIOSCO</td><td className="italic">Modo Seguro</td><td>Configuración que bloquea el avance automático (solo funcionan los botones).</td></tr>
+                            <tbody className="bg-white">
+                                <tr>
+                                    <td className="font-bold text-slate-800">HMI</td>
+                                    <td><em>Human-Machine Interface</em></td>
+                                    <td>Es el panel de control (Pantalla) que diseñas.</td>
+                                </tr>
+                                <tr>
+                                    <td className="font-bold text-slate-800">GUI</td>
+                                    <td><em>Graphical User Interface</em></td>
+                                    <td>Es la parte estética: colores, iconos y botones modernos.</td>
+                                </tr>
+                                <tr>
+                                    <td className="font-bold text-slate-800">INPUT</td>
+                                    <td><em>Señal de Entrada</em></td>
+                                    <td>Es la orden que tú das (Ejemplo: Tu Clic).</td>
+                                </tr>
+                                <tr>
+                                    <td className="font-bold text-slate-800">OUTPUT</td>
+                                    <td><em>Señal de Salida</em></td>
+                                    <td>Es la respuesta de la máquina (Ejemplo: Cambiar de página).</td>
+                                </tr>
+                                <tr>
+                                    <td className="font-bold text-slate-800">VÍNCULO</td>
+                                    <td><em>Cableado Lógico</em></td>
+                                    <td>La conexión invisible entre un botón y una acción.</td>
+                                </tr>
+                                <tr>
+                                    <td className="font-bold text-slate-800">LOGIN</td>
+                                    <td><em>Autenticación</em></td>
+                                    <td>Sistema de seguridad (Contraseña) para filtrar usuarios.</td>
+                                </tr>
                             </tbody>
                         </table>
                     </div>
                 </LevelAccordion>
 
-                <LevelAccordion title="🛠️ NIVEL 1: Quitar el 'Modo Película' (BÁSICO)" mission="Que la presentación NO avance sola (Modo Kiosco).">
+                <LevelAccordion title="🛠️ NIVEL 1: Arquitectura y Navegación (ESTRUCTURA)" mission="Construir el esqueleto del sistema y conectar el menú principal.">
                     <div>
-                        <h4 className="font-bold text-slate-900 mb-3">📍 PASO 1: Congelar la pantalla</h4>
+                        <h4 className="font-bold text-slate-900 mb-3">📍 PASO 1: Iniciar el Proyecto</h4>
                         <ol className="list-decimal list-inside space-y-2 ml-4 text-slate-600">
-                            <li>Ve a la pestaña superior <strong>TRANSICIONES</strong>.</li>
-                            <li>Mira a la derecha, en el grupo llamado <strong>"Intervalos"</strong>.</li>
-                            <li>Busca la casilla que dice <code>Después de:</code> (a veces tiene un icono de reloj).</li>
-                            <li><strong>QUITA la palomita</strong> ☑️ de esa casilla. (Debe quedar el cuadro vacío). <span className="italic text-blue-600">*Ahora tu presentación está congelada. Solo avanzará si tú programas los botones.*</span></li>
-                        </ol>
-                    </div>
-                    <div>
-                        <h4 className="font-bold text-slate-900 mb-3">📍 PASO 2: El Botón de Reinicio</h4>
-                        <ol className="list-decimal list-inside space-y-2 ml-4 text-slate-600">
-                            <li>Ve a tu <strong>última diapositiva</strong>.</li>
-                            <li>Inserta una Forma (Botón). Escribe dentro: "REINICIAR".</li>
-                            <li>Da <strong>Clic Derecho</strong> al borde del botón > Elige <strong>Vínculo</strong> (o Hipervínculo).</li>
-                            <li>En la ventana que se abre:
-                                <ul className="list-disc list-inside ml-4 mt-2">
-                                    <li>A la izquierda, en "Vincular a:", elige: <code>Lugar de este documento</code>.</li>
-                                    <li>En la lista del centro, selecciona: <strong>Diapositiva 1</strong>.</li>
-                                    <li>Dale <strong>Aceptar</strong>.</li>
+                            <li>Abre PowerPoint (Presentación en Blanco).</li>
+                            <li>Borra los cuadros de texto para que la hoja quede limpia.</li>
+                            <li><strong>Crear el Mapa:</strong> En la columna izquierda, da Clic Derecho > <strong>Nueva Diapositiva</strong>. Repite hasta tener <strong>4 diapositivas en total</strong>.</li>
+                            <li>Escribe un título temporal en cada una para no perderte (bórralos al final):
+                                <ul className="list-disc list-inside ml-4 mt-1">
+                                    <li>Diapositiva 1: "PORTADA"</li>
+                                    <li>Diapositiva 2: "TEMAS"</li>
+                                    <li>Diapositiva 3: "GALERÍA"</li>
+                                    <li>Diapositiva 4: "AYUDA"</li>
                                 </ul>
                             </li>
                         </ol>
                     </div>
+                    <div className="mt-6">
+                        <h4 className="font-bold text-slate-900 mb-3">📍 PASO 2: Construir el Menú (Interfaz)</h4>
+                        <ol className="list-decimal list-inside space-y-2 ml-4 text-slate-600">
+                            <li>Regresa a la <strong>Diapositiva 1 (Portada)</strong>.</li>
+                            <li>Dibuja 3 Rectángulos grandes (Botones) en el centro.</li>
+                            <li>Escribe dentro de ellos:
+                                <br/><code>[ TEMAS ]</code>
+                                <br/><code>[ GALERÍA ]</code>
+                                <br/><code>[ AYUDA ]</code>
+                            </li>
+                        </ol>
+                    </div>
+                    <div className="mt-6">
+                        <h4 className="font-bold text-slate-900 mb-3">📍 PASO 3: Conectar los Cables (Lógica)</h4>
+                        <ol className="list-decimal list-inside space-y-2 ml-4 text-slate-600">
+                            <li>Da <strong>Clic Derecho</strong> al borde del botón <code>[ TEMAS ]</code>.</li>
+                            <li>Elige: <strong>Vínculo</strong> (o Hipervínculo).</li>
+                            <li>En la ventana, elige: <code>Lugar de este documento</code> > Selecciona la <strong>Diapositiva 2</strong>. Aceptar.</li>
+                            <li><strong>Repite:</strong>
+                                <ul className="list-disc list-inside ml-4">
+                                    <li>Conecta el botón <code>[ GALERÍA ]</code> a la <strong>Diapositiva 3</strong>.</li>
+                                    <li>Conecta el botón <code>[ AYUDA ]</code> a la <strong>Diapositiva 4</strong>.</li>
+                                </ul>
+                            </li>
+                            <li><em className="text-accent-blue">Prueba:</em> Pon la presentación en pantalla completa (F5) y da clic en tus botones. Deberían llevarte a las otras hojas.</li>
+                        </ol>
+                    </div>
                 </LevelAccordion>
 
-                <LevelAccordion title="🚀 NIVEL 2: Menú de Navegación (INTERMEDIO)" mission="Convertir la Portada en un Tablero de Control (GUI).">
-                    <div className="space-y-6">
-                        <div className="p-4 bg-orange-50 border border-orange-200 rounded-lg text-sm">
-                            <h5 className="font-bold text-orange-700 mb-1">📍 PASO 0: Crear los Destinos (IMPORTANTE)</h5>
-                            <p className="italic text-slate-500 mb-1">*Para conectar botones, primero necesitas tener a dónde llegar.*</p>
-                            <ol className="list-decimal list-inside text-slate-700">
-                                <li>Asegúrate de tener al menos 3 diapositivas después de la portada.</li>
-                                <li>Ponles títulos temporales: "Diapositiva 2 (Temas)", "Diapositiva 3 (Galería)", "Diapositiva 4 (Ayuda)".</li>
-                            </ol>
-                        </div>
-                        <div>
-                            <h4 className="font-bold text-slate-900 mb-3">📍 PASO 1: Crear los Botones</h4>
-                            <ol className="list-decimal list-inside text-slate-600 ml-4">
-                                <li>Ve a la <strong>Diapositiva 1</strong> (Tu Portada).</li>
-                                <li>Dibuja 3 Rectángulos grandes y escribe: <code>[ TEMAS ]</code>, <code>[ GALERÍA ]</code>, <code>[ AYUDA ]</code>.</li>
-                            </ol>
-                        </div>
-                        <div>
-                            <h4 className="font-bold text-slate-900 mb-3">📍 PASO 2: Conectar los Cables</h4>
-                            <ol className="list-decimal list-inside text-slate-600 ml-4">
-                                <li>Clic Derecho al botón <code>[ TEMAS ]</code> > <strong>Vínculo</strong>.</li>
-                                <li>Elige: <code>Lugar de este documento</code> > Selecciona la <strong>Diapositiva 2</strong>. Aceptar.</li>
-                                <li>Repite exactamente lo mismo con <code>[ GALERÍA ]</code> (a la Diapositiva 3) y <code>[ AYUDA ]</code> (a la Diapositiva 4).</li>
-                            </ol>
-                        </div>
-                        <div className="p-4 bg-blue-50 border border-blue-200 rounded-lg text-sm">
-                            <h5 className="font-bold text-blue-700 mb-1">📍 PASO 3: El Camino de Regreso (La Casita 🏠)</h5>
-                            <p className="italic text-blue-500 mb-1">*Regla: Un buen sistema siempre permite volver.*</p>
-                            <ol className="list-decimal list-inside text-slate-700">
-                                <li>Ve a la Diapositiva 2. Dibuja una casita pequeña en una esquina.</li>
-                                <li>Vincúlala de regreso a la <strong>Diapositiva 1</strong>.</li>
-                                <li>Selecciona la casita, cópiala (<code>Ctrl+C</code>) y pégala (<code>Ctrl+V</code>) en TODAS las demás diapositivas.</li>
-                            </ol>
-                        </div>
+                <LevelAccordion title="🚀 NIVEL 2: El Bucle y el Candado (SEGURIDAD)" mission="Crear el botón de regreso y bloquear el sistema (Modo Kiosco).">
+                    <div>
+                        <h4 className="font-bold text-slate-900 mb-3">📍 PASO 1: El Camino de Regreso (Bucle)</h4>
+                        <p className="italic text-slate-500 mb-2 ml-4">*Regla: Un buen sistema siempre permite volver al inicio.*</p>
+                        <ol className="list-decimal list-inside space-y-2 ml-4 text-slate-600">
+                            <li>Ve a la <strong>Diapositiva 2 (Temas)</strong>.</li>
+                            <li>Dibuja una <strong>Casita</strong> 🏠 pequeña en una esquina (Insertar > Formas).</li>
+                            <li>Vincúlala de regreso a la <strong>Diapositiva 1 (Portada)</strong>.</li>
+                            <li>Copia la casita (<code>Ctrl+C</code>) y pégala (<code>Ctrl+V</code>) en la Diapositiva 3 y 4.</li>
+                        </ol>
+                    </div>
+                    <div className="mt-6">
+                        <h4 className="font-bold text-slate-900 mb-3">📍 PASO 2: El Candado (Modo Kiosco)</h4>
+                        <p className="italic text-slate-500 mb-2 ml-4">*Importante: Si no haces esto, tu simulador fallará porque avanzará al dar clic en cualquier lado.*</p>
+                        <ol className="list-decimal list-inside space-y-2 ml-4 text-slate-600">
+                            <li>Ve a la pestaña superior <strong>TRANSICIONES</strong>.</li>
+                            <li>Mira a la derecha, en el grupo "Intervalos".</li>
+                            <li>Busca la casilla que dice: <code>[ ] Al hacer clic con el mouse</code>.</li>
+                            <li><strong>QUÍTALE LA PALOMITA</strong> ☑️. (Debe quedar vacía).</li>
+                            <li>Repite esto en <strong>TODAS</strong> tus diapositivas (1, 2, 3 y 4). <span className="italic text-accent-blue">*Ahora tu proyecto está "blindado". Solo se puede navegar usando tus botones.*</span></li>
+                        </ol>
                     </div>
                 </LevelAccordion>
 
                 <LevelAccordion title="🔥 NIVEL 3: Sistema de Seguridad LOGIN (LÓGICA)" mission="Crear una contraseña. Solo el que sepa el número entra.">
                     <div className="space-y-6">
                         <div>
-                            <h4 className="font-bold text-slate-900 mb-3">📍 PASO 1: Preparar las Pantallas</h4>
-                            <ol className="list-decimal list-inside text-slate-600 ml-4">
-                                <li>Inserta una <strong>Diapositiva Nueva</strong> y muévela al <strong>principio de todo</strong> (Arrástrala arriba del todo). Esta será la #1.</li>
-                                <li>Inserta otra <strong>Nueva</strong> al final, píntala de <strong>ROJO</strong> y escribe gigante: "ACCESO DENEGADO".</li>
+                            <h4 className="font-bold text-slate-900 mb-3">📍 PASO 1: Insertar Pantallas Nuevas</h4>
+                            <p className="italic text-slate-500 mb-2 ml-4">*¡Ojo! Al hacer esto, tus diapositivas se moverán de lugar.*</p>
+                            <ol className="list-decimal list-inside space-y-2 ml-4 text-slate-600">
+                                <li>Inserta una <strong>Nueva Diapositiva</strong> y arrástrala hasta arriba, al <strong>principio de todo</strong>.
+                                    <ul className="list-disc list-inside ml-4 text-sm mt-1">
+                                        <li><em>Esta nueva hoja será la #1 (LOGIN).</em></li>
+                                        <li><em>Tu antigua portada ahora es la #2.</em></li>
+                                    </ul>
+                                </li>
+                                <li>Inserta otra <strong>Nueva</strong> al final de todo (la última).
+                                    <ul className="list-disc list-inside ml-4 text-sm mt-1">
+                                        <li><em>Píntala de rojo y escribe "ACCESO DENEGADO".</em></li>
+                                    </ul>
+                                </li>
+                                <li className="p-3 bg-red-50 border border-red-200 rounded text-red-700 font-bold text-sm">
+                                    🛑 ¡SEGURIDAD! Recuerda quitarle la palomita de "Al hacer clic" (Transiciones) a estas dos nuevas diapositivas también.
+                                </li>
                             </ol>
                         </div>
                         <div>
@@ -490,21 +522,21 @@
                             </ol>
                         </div>
                         <div className="p-5 bg-slate-900 text-slate-100 rounded-xl space-y-4">
-                            <h5 className="font-bold text-blue-400">📍 PASO 3: Programar la Trampa</h5>
+                            <h5 className="font-bold text-accent-blue">📍 PASO 3: Programar la Trampa</h5>
                             <p className="italic text-slate-300 text-sm">*Imagina que tu clave secreta es el número <strong>7</strong>.*</p>
                             <ul className="space-y-4 text-sm">
                                 <li>
-                                    <strong className="text-green-400 block mb-1">1. El Botón Correcto (El 7):</strong>
-                                    Clic Derecho al botón <strong>7</strong> > Vínculo > Selecciona la diapositiva del <strong>Menú Principal</strong> (Que ahora es la Diapositiva 2). Aceptar.
+                                    <strong className="text-accent-green block mb-1">1. El Botón Correcto (El 7):</strong>
+                                    Clic Derecho al botón <strong>7</strong> > Vínculo > Selecciona la <strong>Diapositiva 2</strong> (Tu Portada/Menú).
                                 </li>
                                 <li>
                                     <strong className="text-red-400 block mb-1">2. Los Botones Trampa (Todos los demás):</strong>
-                                    Clic Derecho al botón <strong>1</strong> > Vínculo > Selecciona la <strong>Diapositiva ROJA</strong> (Acceso Denegado). Aceptar.
-                                    <br/><span className="uppercase font-black text-xs text-red-500 mt-1 block">🛑 ¡PACIENCIA! Tienes que repetir esto con el 2, 3, 4, 5, 6, 8 y 9.</span>
+                                    Clic Derecho al botón <strong>1</strong> > Vínculo > Selecciona la <strong>Diapositiva Roja</strong> (La última).
+                                    <br/><span className="italic text-slate-400 text-xs block mt-1">*Repite esto con todos los números incorrectos.*</span>
                                 </li>
                                 <li>
                                     <strong className="text-white block mb-1">3. Salida de Emergencia:</strong>
-                                    Ve a la Diapositiva Roja. Pon un botón "REINTENTAR". Vincúlalo de regreso al <strong>Login (Diapositiva 1)</strong>.
+                                    Ve a la Diapositiva Roja. Pon un botón "REINTENTAR". Vincúlalo de regreso a la <strong>Diapositiva 1 (Login)</strong>.
                                 </li>
                             </ul>
                         </div>
@@ -512,25 +544,19 @@
                 </LevelAccordion>
 
                 <LevelAccordion title="🏆 NIVEL 4: Experiencia de Usuario (AVANZADO)">
-                    <p className="italic text-slate-600 mb-4">*Hazlo profesional. Tienes 9 horas, perfecciona tu GUI.*</p>
+                    <p className="italic text-slate-600 mb-4">*Hazlo profesional. Perfecciona tu GUI.*</p>
                     <div className="grid md:grid-cols-2 gap-4">
                         <div className="p-4 border border-slate-200 rounded-lg">
-                            <h5 className="font-bold mb-2 text-blue-600">1. Sonidos (Feedback)</h5>
-                            <p className="text-sm text-slate-600 mb-2">Haz que los botones suenen al hacer clic.</p>
+                            <h5 className="font-bold mb-2 text-accent-blue">1. Sonidos (Feedback)</h5>
+                            <p className="text-sm text-slate-600 mb-2">Haz que los botones suenen.</p>
                             <ul className="text-sm list-disc list-inside text-slate-600">
-                                <li>Selecciona un botón.</li>
-                                <li>Ve a la pestaña <strong>Insertar</strong>.</li>
-                                <li>Busca el botón <strong>Acción</strong> (Icono estrella/rayo).</li>
-                                <li>Activa: <strong>"Reproducir sonido"</strong>.</li>
-                                <li>Elige "Clic" o "Láser". Aceptar.</li>
+                                <li>Selecciona un botón > Insertar > Acción (Estrella) > Activa "Reproducir sonido" > Elige "Clic".</li>
                             </ul>
                         </div>
                         <div className="p-4 border border-slate-200 rounded-lg">
-                            <h5 className="font-bold mb-2 text-blue-600">2. Modo Oscuro</h5>
+                            <h5 className="font-bold mb-2 text-accent-blue">2. Modo Oscuro</h5>
                             <ul className="text-sm list-disc list-inside text-slate-600">
-                                <li>Duplica tus diapositivas clave.</li>
-                                <li>Cámbiales el fondo a Negro y las letras a Blanco/Neón.</li>
-                                <li>Crea un botón que te lleve a esa versión "De noche".</li>
+                                <li>Duplica tus diapositivas clave, cambia el fondo a Negro y las letras a Blanco. Crea un botón para alternar.</li>
                             </ul>
                         </div>
                     </div>
@@ -541,8 +567,7 @@
                         <div>
                             <h4 className="font-bold text-slate-900 mb-3">📍 PASO 1: Ubicar la hoja</h4>
                             <ol className="list-decimal list-inside text-slate-600 ml-4">
-                                <li>No crees hoja nueva.</li>
-                                <li>Busca la diapositiva que conectaste al botón <strong>[ AYUDA ]</strong> en el Nivel 2 (Debería ser la diapositiva 4).</li>
+                                <li>No importa el número de la diapositiva, busca la hoja que titulaste <strong>"AYUDA"</strong> (debe tener el botón <code>[ AYUDA ]</code> conectado a ella).</li>
                                 <li>Ponle de Título: <strong>"MANUAL DE OPERACIÓN"</strong>.</li>
                             </ol>
                         </div>
@@ -551,15 +576,15 @@
                             <p className="text-slate-600 mb-4">Inserta un <strong>Cuadro de Texto</strong> grande. Copia estas preguntas y escribe TUS respuestas reales:</p>
                             <div className="space-y-4 text-sm">
                                 <div>
-                                    <p className="font-bold text-blue-600">P: ¿Cómo inicio el sistema?</p>
+                                    <p className="font-bold text-accent-blue">P: ¿Cómo inicio el sistema?</p>
                                     <p className="italic text-slate-700">R: "Presione la casita para ir al Login..."</p>
                                 </div>
                                 <div>
-                                    <p className="font-bold text-blue-600">P: ¿Cuál es la contraseña correcta?</p>
+                                    <p className="font-bold text-accent-blue">P: ¿Cuál es la contraseña correcta?</p>
                                     <p className="italic text-slate-700">R: "La clave es el número: [PON AQUÍ TU NÚMERO SECRETO]".</p>
                                 </div>
                                 <div>
-                                    <p className="font-bold text-blue-600">P: ¿Qué hago si sale la Pantalla Roja?</p>
+                                    <p className="font-bold text-accent-blue">P: ¿Qué hago si sale la Pantalla Roja?</p>
                                     <p className="italic text-slate-700">R: "Presione Reintentar e ingrese la clave correcta."</p>
                                 </div>
                             </div>
@@ -570,9 +595,9 @@
                 <div className="glass-card p-8 bg-green-50 border-green-200">
                     <h3 className="text-xl font-bold text-green-700 mb-6 flex items-center gap-2">✅ CHECKLIST FINAL:</h3>
                     <div className="space-y-4">
-                        {["El sistema NO avanza solo (Modo Kiosco).", "Login funcional (Clave correcta entra, error bloquea).", "Menú con navegación de ida y vuelta.", "Experiencia de Usuario (Sonidos y Modo Oscuro agregados).", "Manual de Ayuda escrito con la clave."].map(item => (
+                        {["El sistema NO avanza solo (Transiciones bloqueadas).", "Login funcional (Clave correcta entra, error bloquea).", "Menú con navegación de ida y vuelta.", "Experiencia de Usuario (Sonidos y Modo Oscuro agregados).", "Manual de Ayuda escrito con la clave."].map(item => (
                             <label key={item} className="flex items-center gap-3 checklist-item cursor-pointer">
-                                <input type="checkbox" className="w-5 h-5 rounded text-green-600 border-green-300 focus:ring-green-500" />
+                                <input type="checkbox" className="w-5 h-5 rounded text-accent-green border-green-300 focus:ring-green-500" />
                                 <span className="text-slate-700 font-medium">{item}</span>
                             </label>
                         ))}
